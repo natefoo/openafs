@@ -710,22 +710,22 @@ case $AFS_SYSNAME in
 		;;
 
 	sunx86_511)
-		CC=$SOLARISCC
-		CCOBJ=$SOLARISCC
+		CFLAGS="$CFLAGS -m64"
 		LD="/usr/ccs/bin/ld"
-		MT_CC=$SOLARISCC
-		MT_CFLAGS='-mt -DAFS_PTHREAD_ENV ${XCFLAGS}'
+		MT_CFLAGS='-pthread -DAFS_PTHREAD_ENV'
 		MT_LIBS="-lpthread -lsocket"
-		PAM_CFLAGS="-KPIC"
+		PAM_CFLAGS="-fPIC"
 		PAM_LIBS="-lc -lpam -lsocket -lnsl -lm"
-		SHLIB_CFLAGS="-KPIC"
-		SHLIB_LDFLAGS="-G -Bsymbolic"
-		XCFLAGS64='${XCFLAGS} -xarch=amd64'
-		XCFLAGS="-dy -Bdynamic"
+		SHLIB_CFLAGS="-fPIC"
+		SHLIB_LDFLAGS="-shared"
+		XCFLAGS64='-m64'
+		XCFLAGS='-m64'
+		XLDFLAGS='-m64'
 		XLIBELFA="-lelf"
 		XLIBKVM="-lkvm"
-		XLIBS="${LIB_AFSDB} -lsocket -lnsl -lintl -ldl"
-		SHLIB_LINKER="${CC} -G -dy -Bsymbolic -z text"
+		XLIBS="${LIB_AFSDB} -lsocket -lnsl -lintl -ldl -lproc"
+		SHLIB_LINKER="${CC} -shared ${XCFLAGS}"
+		ASFLAGS='--64'
 		;;
 esac
 
